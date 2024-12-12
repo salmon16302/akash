@@ -1,0 +1,18 @@
+- hosts: akash-pcs
+  tasks:
+    - name: Install Akash CLI
+      shell: curl -s https://raw.githubusercontent.com/ovrclk/akash/master/godownloader.sh | sh
+
+    - name: Install Docker
+      apt:
+        name: docker.io
+        state: present
+
+    - name: Copy Manifest
+      copy:
+        src: ./group-deployment.yml
+        dest: /home/{{ ansible_user }}/group-deployment.yml
+
+    - name: Start Deployment
+      shell: >
+        akash tx deployment create /home/{{ ansible_user }}/group-deployment.yml --from my-wallet --chain-id akashnet-2
