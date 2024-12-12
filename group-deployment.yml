@@ -1,0 +1,25 @@
+version: "2.0"
+services:
+  my-app:
+    image: nginx
+    expose:
+      - port: 80
+        to:
+          - global: true
+profiles:
+  compute:
+    small:
+      resources:
+        cpu: 200
+        memory: 128Gi
+        storage: 1Gi
+  placement:
+    default:
+      attributes: {}
+      signedBy:
+        anyOf:
+          - akash1yourwalletaddress
+      pricing:
+        small:
+          denom: uakt
+          amount: 100
